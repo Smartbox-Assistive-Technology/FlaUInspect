@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using FlaUI.Core;
 using FlaUInspect.ViewModels;
 
 namespace FlaUInspect.Views
@@ -36,12 +37,7 @@ namespace FlaUInspect.Views
         {
             if (!_vm.IsInitialized)
             {
-                var dlg = new ChooseVersionWindow { Owner = this };
-                if (dlg.ShowDialog() != true)
-                {
-                    Close();
-                }
-                _vm.Initialize(dlg.SelectedAutomationType);
+                _vm.Initialize(AutomationType.UIA3);
                 Loaded -= MainWindow_Loaded;
             }
         }

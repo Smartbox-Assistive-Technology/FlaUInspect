@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
-using FlaUI.Core.Input;
+using Mouse = FlaUI.Core.Input.Mouse;
 
 namespace FlaUInspect.Core
 {
@@ -38,7 +39,8 @@ namespace FlaUInspect.Core
 
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
-            if (System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) 
+                && (Keyboard.IsKeyDown(Key.Space) || Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)))
             {
                 var screenPos = Mouse.Position;
                 try

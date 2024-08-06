@@ -50,6 +50,10 @@ namespace FlaUInspect.ViewModels
             {
                 RefreshTree();
             });
+            ToggleHoverMode = new RelayCommand(o =>
+            {
+                EnableHoverMode = !EnableHoverMode;
+            });
         }
 
         public bool IsInitialized
@@ -58,16 +62,17 @@ namespace FlaUInspect.ViewModels
             private set { SetProperty(value); }
         }
 
+        private bool _isHoverModeOn = true;
         public bool EnableHoverMode
         {
-            get { return GetProperty<bool>(); }
+            get => _isHoverModeOn;
             set
             {
-                if (SetProperty(value))
-                {
-                    if (value) { _hoverMode.Start(); }
-                    else { _hoverMode.Stop(); }
-                }
+                if (_isHoverModeOn == value) return;
+                if (value) { _hoverMode.Start(); }
+                else { _hoverMode.Stop(); }
+
+                _isHoverModeOn = value;
             }
         }
 
@@ -103,6 +108,7 @@ namespace FlaUInspect.ViewModels
         public ICommand CaptureSelectedItemCommand { get; private set; }
 
         public ICommand RefreshCommand { get; private set; }
+        public ICommand ToggleHoverMode { get; private set; }
 
         public ObservableCollection<DetailGroupViewModel> SelectedItemDetails => SelectedItemInTree?.ItemDetails;
 
@@ -131,6 +137,7 @@ namespace FlaUInspect.ViewModels
             // Initialize hover
             _hoverMode = new HoverMode(_automation);
             _hoverMode.ElementHovered += ElementToSelectChanged;
+            _hoverMode.Start();
 
             // Initialize focus tracking
             _focusTrackingMode = new FocusTrackingMode(_automation);

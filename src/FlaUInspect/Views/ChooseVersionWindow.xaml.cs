@@ -13,7 +13,7 @@ namespace FlaUInspect.Views
             InitializeComponent();
         }
 
-        public AutomationType SelectedAutomationType { get; private set; }
+        public AutomationType SelectedAutomationType { get; private set; } = AutomationType.UIA3;
 
         private void UIA2ButtonClick(object sender, RoutedEventArgs e)
         {
